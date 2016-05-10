@@ -222,32 +222,32 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
 
             <div class="form-group">
               <label for="">Mã số</label>
-              <input type="text" class="form-control" id="name" placeholder="Tên">
+              <input type="text" class="form-control" id="name" placeholder="">
             </div>
 
             <div class="form-group">
               <label for="">SL</label>
-              <input type="text" class="form-control" id="name" placeholder="Tên">
+              <input type="text" class="form-control" id="name" placeholder="" value="1">
             </div>
 
             <div class="form-group">
               <label for="">DVT</label>
-              <input type="text" class="form-control" id="name" placeholder="Tên">
+              <input type="text" class="form-control" id="name" placeholder="" value="Cái">
             </div>
 
             <div class="form-group">
               <label for="">Ngày SD</label>
-              <input type="text" class="form-control" id="name" placeholder="Tên">
+              <input type="text" class="form-control" id="name" placeholder="" value="<?= date('d-m-Y') ?>">
             </div>
 
             <div class="form-group">
               <label for="">Số năm khấu hao</label>
-              <input type="text" class="form-control" id="name" placeholder="Tên">
+              <input type="text" class="form-control" id="name" value="10">
             </div>
 
             <div class="form-group">
               <label for="">Nguyên giá</label>
-              <input type="text" class="form-control" id="name" placeholder="Tên">
+              <input type="text" class="form-control" id="name" placeholder="">
             </div>
 
           </form>
