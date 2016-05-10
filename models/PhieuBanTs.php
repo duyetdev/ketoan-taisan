@@ -16,11 +16,13 @@ use Yii;
  * @property integer $ma_kh
  * @property integer $ma_tk
  * @property integer $ma_kho
+ * @property integer $ma_nvc
  *
  * @property ChiTietPhieuBan $chiTietPhieuBan
  * @property KhachHang $maKh
  * @property TaiKhoan $maTk
  * @property Kho $maKho
+ * @property KhachHang $maNvc
  */
 class PhieuBanTs extends \yii\db\ActiveRecord
 {
@@ -38,12 +40,14 @@ class PhieuBanTs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['so_pb'], 'required'],
-            [['so_pb', 'ma_kh', 'ma_tk', 'ma_kho'], 'integer'],
+            [['so_pb', 'ly_do', 'ma_nvc'], 'required'],
+            [['so_pb', 'ma_kh', 'ma_tk', 'ma_kho', 'ma_nvc'], 'integer'],
             [['ngay_ban', 'so_hoa_don', 'ngay_hoa_don', 'loai_hoa_don', 'thue_suat'], 'string', 'max' => 45],
             [['ma_kh'], 'exist', 'skipOnError' => true, 'targetClass' => KhachHang::className(), 'targetAttribute' => ['ma_kh' => 'ma_kh']],
+            [['ly_do'], 'string', 'max' => 255], 
             [['ma_tk'], 'exist', 'skipOnError' => true, 'targetClass' => TaiKhoan::className(), 'targetAttribute' => ['ma_tk' => 'ma_tk']],
             [['ma_kho'], 'exist', 'skipOnError' => true, 'targetClass' => Kho::className(), 'targetAttribute' => ['ma_kho' => 'ma_kho']],
+            [['ma_nvc'], 'exist', 'skipOnError' => true, 'targetClass' => KhachHang::className(), 'targetAttribute' => ['ma_nvc' => 'ma_kh']],
         ];
     }
 
@@ -61,7 +65,9 @@ class PhieuBanTs extends \yii\db\ActiveRecord
             'thue_suat' => 'Thue Suat',
             'ma_kh' => 'Ma Kh',
             'ma_tk' => 'Ma Tk',
+            'ly_do' => 'Lý do',
             'ma_kho' => 'Ma Kho',
+            'ma_nvc' => 'Ma Nvc',
         ];
     }
 
@@ -95,6 +101,14 @@ class PhieuBanTs extends \yii\db\ActiveRecord
     public function getMaKho()
     {
         return $this->hasOne(Kho::className(), ['ma_kho' => 'ma_kho']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMaNvc()
+    {
+        return $this->hasOne(KhachHang::className(), ['ma_kh' => 'ma_nvc']);
     }
 
     /**

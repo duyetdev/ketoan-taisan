@@ -11,7 +11,7 @@ $this->title = 'HTTT Kế toán';
         
         <div id="overview-chart"></div>
 
-        <p><a class="btn btn-lg btn-success" href=""></a></p>
+        <!-- <p><a class="btn btn-lg btn-success" href=""></a></p> -->
     </div>
 
     <div class="body-content">

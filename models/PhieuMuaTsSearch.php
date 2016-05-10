@@ -18,7 +18,7 @@ class PhieuMuaTsSearch extends PhieuMuaTs
     public function rules()
     {
         return [
-            [['so_pm', 'so_hoa_son', 'ma_kh', 'ma_tk_chinh', 'ma_kho'], 'integer'],
+            [['so_pm', 'so_hoa_son', 'ma_kh', 'ma_tk_chinh', 'ma_kho', 'ma_nvc'], 'integer'],
             [['ngay_lap', 'ngay_su_dung', 'ngay_phat_hanh_hd', 'loai_hoa_don'], 'safe'],
             [['thue_suat'], 'number'],
         ];
@@ -69,6 +69,7 @@ class PhieuMuaTsSearch extends PhieuMuaTs
             'ma_kh' => $this->ma_kh,
             'ma_tk_chinh' => $this->ma_tk_chinh,
             'ma_kho' => $this->ma_kho,
+            'ma_nvc' => $this->ma_nvc,
         ]);
 
         $query->andFilterWhere(['like', 'loai_hoa_don', $this->loai_hoa_don]);

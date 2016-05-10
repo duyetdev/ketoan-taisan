@@ -14,7 +14,9 @@ use Yii;
  * @property string $so_tai_khoan
  *
  * @property PhieuBanTs[] $phieuBanTs
+ * @property PhieuBanTs[] $phieuBanTs0
  * @property PhieuMuaTs[] $phieuMuaTs
+ * @property PhieuMuaTs[] $phieuMuaTs0
  */
 class KhachHang extends \yii\db\ActiveRecord
 {
@@ -44,7 +46,7 @@ class KhachHang extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ma_kh' => 'Mã khách hàng',
+            'ma_kh' => 'Ma Kh',
             'ten_kh' => 'Ten Kh',
             'dia_chi' => 'Dia Chi',
             'ma_so_thue' => 'Ma So Thue',
@@ -63,9 +65,25 @@ class KhachHang extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getPhieuBanTs0()
+    {
+        return $this->hasMany(PhieuBanTs::className(), ['ma_nvc' => 'ma_kh']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getPhieuMuaTs()
     {
         return $this->hasMany(PhieuMuaTs::className(), ['ma_kh' => 'ma_kh']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getPhieuMuaTs0()
+    {
+        return $this->hasMany(PhieuMuaTs::className(), ['ma_nvc' => 'ma_kh']);
     }
 
     /**

@@ -20,8 +20,9 @@ AppAsset::register($this);
     <?= Html::csrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
-    <link rel="stylesheet" type="text/css" href="css/bootstrap-themes.css">
-    <link rel="stylesheet" type="text/css" href="css/custom.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap-themes.css">
+    <link rel="stylesheet" type="text/css" href="/css/custom.css">
+    <!-- <link rel="stylesheet" type="text/css" href="/css/custom.min.css"> -->
 </head>
 <body>
 <?php $this->beginBody() ?>
@@ -39,15 +40,16 @@ AppAsset::register($this);
         'options' => ['class' => 'navbar-nav navbar-right'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
-            // ['label' => 'About', 'url' => ['/site/about']],
-            // ['label' => 'Contact', 'url' => ['/site/contact']],
+            ['label' => 'Khách hàng', 'url' => ['/khach-hang']],
+            ['label' => 'Kho', 'url' => ['/kho']],
+            ['label' => 'Tài sản', 'url' => ['/tai-san']],
             Yii::$app->user->isGuest ? (
-                ['label' => 'Login', 'url' => ['/site/login']]
+                ['label' => 'Đăng nhập', 'url' => ['/site/login']]
             ) : (
                 '<li>'
                 . Html::beginForm(['/site/logout'], 'post', ['class' => 'navbar-form'])
                 . Html::submitButton(
-                    'Logout (' . Yii::$app->user->identity->username . ')',
+                    'Đăng xuất (' . Yii::$app->user->identity->username . ')',
                     ['class' => 'btn btn-link']
                 )
                 . Html::endForm()

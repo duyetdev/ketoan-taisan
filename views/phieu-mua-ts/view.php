@@ -38,6 +38,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'ma_kh',
             'ma_tk_chinh',
             'ma_kho',
+            'ma_nvc',
         ],
     ]) ?>
 

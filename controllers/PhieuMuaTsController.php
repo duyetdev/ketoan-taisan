@@ -64,12 +64,16 @@ class PhieuMuaTsController extends Controller
     public function actionCreate()
     {
         $model = new PhieuMuaTs();
+        // $model->ngay_lap = new Expression('NOW()');
+
+        $kho = \app\models\Kho::find()->all();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->so_pm]);
         } else {
             return $this->render('create', [
                 'model' => $model,
+                'kho' => $kho,
             ]);
         }
     }
