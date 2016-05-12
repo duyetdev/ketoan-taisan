@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: May 10, 2016 at 05:03 PM
+-- Generation Time: May 12, 2016 at 01:04 PM
 -- Server version: 5.6.27-0ubuntu0.15.04.1
 -- PHP Version: 5.6.4-4ubuntu6.4
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8 */;
 
 --
--- Database: `ketoan`
+-- Database: `ketoan-2`
 --
 
 -- --------------------------------------------------------
@@ -140,6 +140,7 @@ CREATE TABLE IF NOT EXISTS `Phieu_ban_ts` (
 
 CREATE TABLE IF NOT EXISTS `Phieu_mua_ts` (
 `so_pm` int(11) NOT NULL,
+  `so_phieu` varchar(50) NOT NULL,
   `ngay_lap` date DEFAULT NULL,
   `ngay_su_dung` date DEFAULT NULL,
   `so_hoa_son` int(11) DEFAULT NULL,
@@ -151,7 +152,15 @@ CREATE TABLE IF NOT EXISTS `Phieu_mua_ts` (
   `ma_tk_chinh` int(11) DEFAULT NULL,
   `ma_kho` int(11) DEFAULT NULL,
   `ma_nvc` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `Phieu_mua_ts`
+--
+
+INSERT INTO `Phieu_mua_ts` (`so_pm`, `so_phieu`, `ngay_lap`, `ngay_su_dung`, `so_hoa_son`, `ngay_phat_hanh_hd`, `loai_hoa_don`, `ly_do`, `thue_suat`, `ma_kh`, `ma_tk_chinh`, `ma_kho`, `ma_nvc`) VALUES
+(1, '', '2016-05-03', '2016-05-10', 1, '2016-05-11', 'đdd', 'đd', 76, 5, 112, 1, 5),
+(3, '', '2016-05-11', '2016-05-18', NULL, NULL, NULL, '', NULL, 5, 111, 2, 5);
 
 -- --------------------------------------------------------
 
@@ -288,7 +297,7 @@ MODIFY `so_pb` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT for table `Phieu_mua_ts`
 --
 ALTER TABLE `Phieu_mua_ts`
-MODIFY `so_pm` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `so_pm` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 --
 -- AUTO_INCREMENT for table `Tai_khoan`
 --
@@ -299,6 +308,50 @@ MODIFY `ma_tk` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2114;
 --
 ALTER TABLE `Tai_san`
 MODIFY `ma_ts` int(11) NOT NULL AUTO_INCREMENT;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `Chi_tiet_phieu_ban`
+--
+ALTER TABLE `Chi_tiet_phieu_ban`
+ADD CONSTRAINT `fk_Chi_tiet_phieu_ban_1` FOREIGN KEY (`so_pb`) REFERENCES `Phieu_ban_ts` (`so_pb`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_Chi_tiet_phieu_ban_2` FOREIGN KEY (`ma_ts`) REFERENCES `Tai_san` (`ma_ts`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_Chi_tiet_phieu_ban_3` FOREIGN KEY (`tk_doi_ung`) REFERENCES `Tai_khoan` (`ma_tk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `Chi_tiet_phieu_mua`
+--
+ALTER TABLE `Chi_tiet_phieu_mua`
+ADD CONSTRAINT `Chi_tiet_phieu_mua_ibfk_1` FOREIGN KEY (`so_pm`) REFERENCES `Phieu_mua_ts` (`so_pm`),
+ADD CONSTRAINT `Chi_tiet_phieu_mua_ibfk_2` FOREIGN KEY (`ma_ts`) REFERENCES `Tai_san` (`ma_ts`),
+ADD CONSTRAINT `fk_Chi_tiet_phieu_mua_3` FOREIGN KEY (`tk_doi_ung`) REFERENCES `Tai_khoan` (`ma_tk`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Constraints for table `Phieu_ban_ts`
+--
+ALTER TABLE `Phieu_ban_ts`
+ADD CONSTRAINT `fk_Phieu_ban_ts_1` FOREIGN KEY (`ma_kh`) REFERENCES `Khach_hang` (`ma_kh`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_Phieu_ban_ts_2` FOREIGN KEY (`ma_tk`) REFERENCES `Tai_khoan` (`ma_tk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_Phieu_ban_ts_3` FOREIGN KEY (`ma_kho`) REFERENCES `Kho` (`ma_kho`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_phieu_ban_nvc` FOREIGN KEY (`ma_nvc`) REFERENCES `Khach_hang` (`ma_kh`);
+
+--
+-- Constraints for table `Phieu_mua_ts`
+--
+ALTER TABLE `Phieu_mua_ts`
+ADD CONSTRAINT `fk_Phieu_mua_ts_1` FOREIGN KEY (`ma_kh`) REFERENCES `Khach_hang` (`ma_kh`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_Phieu_mua_ts_2` FOREIGN KEY (`ma_tk_chinh`) REFERENCES `Tai_khoan` (`ma_tk`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_Phieu_mua_ts_3` FOREIGN KEY (`ma_kho`) REFERENCES `Kho` (`ma_kho`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+ADD CONSTRAINT `fk_phieu_mua_nvc` FOREIGN KEY (`ma_nvc`) REFERENCES `Khach_hang` (`ma_kh`);
+
+--
+-- Constraints for table `Tai_san`
+--
+ALTER TABLE `Tai_san`
+ADD CONSTRAINT `fk_Tai_san_1` FOREIGN KEY (`ma_lts`) REFERENCES `Loai_tai_san` (`ma_lts`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
