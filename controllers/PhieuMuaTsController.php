@@ -8,6 +8,8 @@ use app\models\PhieuMuaTsSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\behaviors\TimestampBehavior;
+use yii\db\ActiveRecord;
 
 /**
  * PhieuMuaTsController implements the CRUD actions for PhieuMuaTs model.
@@ -25,6 +27,14 @@ class PhieuMuaTsController extends Controller
                 'actions' => [
                     'delete' => ['POST'],
                 ],
+            ],
+            'timestamp' => [
+                'class' => TimestampBehavior::className(),
+                'attributes' => [
+                    ActiveRecord::EVENT_BEFORE_INSERT => 'ngay_lap',
+                    // ActiveRecord::EVENT_BEFORE_UPDATE => 'ngay_lap',
+                ],
+                'value' => function() { return date('U'); },
             ],
         ];
     }

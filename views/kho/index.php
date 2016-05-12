@@ -7,29 +7,42 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\KhoSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Khos';
+$this->title = 'Quản lý kho';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="kho-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="row">
+  <div class="col-md-9">
+      <div class="kho-index">
 
-    <p>
-        <?= Html::a('Create Kho', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+          <h1><?= Html::encode($this->title) ?></h1>
+          <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-            'ma_kho',
-            'ten_kho',
-            'dia_chi',
-            'sdt',
+          <p>
+              <!-- <?= Html::a('Thêm', ['create'], ['class' => 'btn btn-success']) ?> -->
+          </p>
+      <?php Pjax::begin(); ?>    <?= GridView::widget([
+              'dataProvider' => $dataProvider,
+              'filterModel' => $searchModel,
+              'columns' => [
+                  ['class' => 'yii\grid\SerialColumn'],
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+                  'ma_kho',
+                  'ten_kho',
+                  'dia_chi',
+                  'sdt',
+
+                  ['class' => 'yii\grid\ActionColumn'],
+              ],
+          ]); ?>
+      <?php Pjax::end(); ?></div>
+    </div>
+
+    <div class="col-md-3">
+        
+        <h1>Thêm mới</h1>
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>
+</div>

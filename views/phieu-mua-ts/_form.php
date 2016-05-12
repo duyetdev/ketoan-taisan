@@ -4,6 +4,7 @@ use yii\bootstrap\ActiveForm;
 use yii\helpers\ArrayHelper;
 use yii\behaviors\TimestampBehavior;
 use yii\db\Expression;
+use yii\jui\DatePicker;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\PhieuMuaTs */
@@ -11,6 +12,7 @@ use yii\db\Expression;
 
 $khachhang = \app\models\KhachHang::find()->asArray()->all();
 $tai_khoan = \app\models\TaiKhoan::find()->asArray()->all();
+$kho = \app\models\Kho::find()->asArray()->all();
 
 $last_id = \app\models\PhieuMuaTs::lastId() + 1;
 $maphieu = 'NTSA' . str_pad($last_id, 5, '0', STR_PAD_LEFT) . '-' . date('m-y');
@@ -27,10 +29,16 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
 <div class="phieu-mua-ts-form">
 
 <div class="row">
+    <div class="col-md-12">
+      <?php print_r($model->getErrors()); ?>
+    </div>
+</div>
+
+<div class="row">
   <div class="col-md-2">
     Đơn vị: <i>Cty CPTM xxx</i><br />
     Kho: <i id="kho"></i>
-    
+
   </div>
 
 </div>
@@ -60,9 +68,9 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
             <label class="control-label col-sm-4">Người giao hàng:</label>
 
             <div class="col-sm-7">
-              <?= Html::activeDropDownList($model, 'ma_nvc', 
+              <?= Html::activeDropDownList($model, 'ma_nvc',
               ArrayHelper::map($khachhang, 'ma_kh', 'ten_kh'),
-              ['class' => 'form-control']); ?>
+              ['class' => 'form-control ma_nvc']); ?>
             </div>
           </div>
 
@@ -79,7 +87,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
           <?= $form->field($model, 'so_phieu')->textInput(['value' => $maphieu]) ?>
 
           <?= $form->field($model, 'so_hoa_son')->textInput() ?>
-          
+
           <div class="form-group">
             <label class="control-label col-sm-4">Số hóa đơn:</label>
 
@@ -95,7 +103,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
             <label class="control-label col-sm-4">của:</label>
 
             <div class="col-sm-4">
-              <?= Html::activeDropDownList($model, 'ma_nvc', 
+              <?= Html::activeDropDownList($model, 'ma_kh',
               ArrayHelper::map($khachhang, 'ma_kh', 'ten_kh'),
               ['class' => 'form-control']); ?>
             </div>
@@ -109,23 +117,25 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
               <label class="control-label col-sm-4">Kho</label>
 
               <div class="col-sm-7">
-                <?= Html::activeDropDownList($model, 'ma_kho', 
+                <?= Html::activeDropDownList($model, 'ma_kho',
                   ArrayHelper::map($kho, 'ma_kho', 'ten_kho'),
                   ['class' => 'form-control']); ?>
               </div>
             </div>
 
           <?= $form->field($model, 'ngay_phat_hanh_hd')->textInput() ?>
+
+
           <?= $form->field($model, 'loai_hoa_don')->textInput(['maxlength' => true]) ?>
 
 
             <?= $form->field($model, 'thue_suat')->textInput() ?>
-            
+
             <div class="form-group">
             <label class="control-label col-sm-4">TK</label>
 
             <div class="col-sm-7">
-              <?= Html::activeDropDownList($model, 'ma_tk_chinh', 
+              <?= Html::activeDropDownList($model, 'ma_tk_chinh',
                 ArrayHelper::map($tai_khoan, 'ma_tk', 'ten_tk'),
                 ['class' => 'form-control']); ?>
             </div>
@@ -160,7 +170,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
                 <td>7</td>
               </tr> -->
             </tbody>
-            <tfoot> 
+            <tfoot>
               <tr>
                 <td colspan="8" class="text-center table-add-row" data-toggle="modal" data-target="#form-chitiet">
                   +add
@@ -168,7 +178,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
               </tr>
             </tfoot>
           </table>
-        </div>    
+        </div>
       </div>
 
       <div class="row text-center">
@@ -177,13 +187,13 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
         </div>
       </div>
       <?php ActiveForm::end(); ?>
-  
+
 </div>
 
 
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.12.0.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js"></script>
-<script type="text/javascript" src="https://cdn.datatables.net/1.10.11/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="/js/jquery-1.12.0.min.js"></script>
+<script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
+<script type="text/javascript" src="/js/dataTables.bootstrap4.min.js"></script>
 
 <script type="text/javascript">
     window.t = $('#chi-tiet-phieu-mua').DataTable();
@@ -201,6 +211,17 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
       window.t.row.add(data).draw(true);
       $('#form-chitiet').modal('hide');
     };
+
+    $('#address').text(khachhang[0].dia_chi);
+    $('.ma_nvc').on('change', function(e) {
+      var id = $(this).val();
+      var dc = '';
+      for (var i in khachhang) {
+        if (khachhang[i].ma_kh == id) {
+          $('#address').text(khachhang[i].dia_chi);
+        }
+      }
+    });
 </script>
 
 
@@ -214,7 +235,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
       <div class="modal-body">
           <form action="" method="POST" role="form" id="chitiet-form">
             <input type="hidden" name="stt" id="stt" class="form-control" value="">
-          
+
             <div class="form-group">
               <label for="">Tên</label>
               <input type="text" class="form-control" id="name" placeholder="Tên">

@@ -6,8 +6,8 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Kho */
 
-$this->title = $model->ma_kho;
-$this->params['breadcrumbs'][] = ['label' => 'Khos', 'url' => ['index']];
+$this->title = $model->ma_kho . " - " . $model->ten_kho;
+$this->params['breadcrumbs'][] = ['label' => 'Kho', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="kho-view">

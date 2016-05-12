@@ -7,7 +7,7 @@ use yii\widgets\Pjax;
 /* @var $searchModel app\models\LoaiTaiSanSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Loai Tai Sans';
+$this->title = 'Loại tài sản';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="loai-tai-san-index">
@@ -16,7 +16,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
     <p>
-        <?= Html::a('Create Loai Tai San', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Thêm mới', ['create'], ['class' => 'btn btn-success']) ?>
+        <?= Html::a('Quản lý tài sản', ['/tai-san'], ['class' => 'btn btn-default']) ?>
     </p>
 <?php Pjax::begin(); ?>    <?= GridView::widget([
         'dataProvider' => $dataProvider,

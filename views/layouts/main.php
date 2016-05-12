@@ -70,7 +70,7 @@ AppAsset::register($this);
 
 <footer class="footer">
     <div class="container">
-        <p class="pull-left">&copy; <?= date('Y') ?></p>
+        <p class="pull-left">&copy; IS <?= date('Y') ?></p>
 
         <!-- <p class="pull-right"><?= Yii::powered() ?></p> -->
     </div>

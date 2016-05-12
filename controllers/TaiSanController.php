@@ -37,10 +37,16 @@ class TaiSanController extends Controller
     {
         $searchModel = new TaiSanSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = new TaiSan();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // return $this->redirect(['view', 'id' => $model->ma_ts]);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
     }
 

@@ -12,8 +12,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'ma_ts')->textInput() ?>
-
+    
     <?= $form->field($model, 'ten_ts')->textInput(['maxlength' => true]) ?>
 
     <?= $form->field($model, 'dvt')->textInput(['maxlength' => true]) ?>

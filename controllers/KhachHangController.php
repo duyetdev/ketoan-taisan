@@ -37,10 +37,15 @@ class KhachHangController extends Controller
     {
         $searchModel = new KhachHangSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = new KhachHang();
 
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+          //   return $this->redirect(['view', 'id' => $model->ma_kh]);
+        }
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
     }
 

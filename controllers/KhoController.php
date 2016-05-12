@@ -37,10 +37,16 @@ class KhoController extends Controller
     {
         $searchModel = new KhoSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $model = new Kho();
+
+        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            // return $this->redirect(['view', 'id' => $model->ma_kho]);
+        }
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'model' => $model
         ]);
     }
 

@@ -18,6 +18,7 @@ use Yii;
  * @property integer $ma_tk_chinh
  * @property integer $ma_kho
  * @property integer $ma_nvc
+ * @property string so_phieu
  *
  * @property ChiTietPhieuMua $soPm
  * @property KhachHang $maKh
@@ -41,7 +42,7 @@ class PhieuMuaTs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['so_pm', 'ma_nvc', 'so_phieu'], 'required'],
+            [['ma_nvc'], 'required'],
             [['so_pm', 'so_hoa_son', 'ma_kh', 'ma_tk_chinh', 'ma_kho', 'ma_nvc'], 'integer'],
             [['ngay_lap', 'ngay_su_dung', 'ngay_phat_hanh_hd'], 'safe'],
             [['thue_suat'], 'number'],
@@ -63,16 +64,16 @@ class PhieuMuaTs extends \yii\db\ActiveRecord
         return [
             'so_pm' => 'Số phiếu',
             'so_phieu' => 'Số phiếu',
-            'ngay_lap' => 'Ngay Lap',
-            'ngay_su_dung' => 'Ngay Su Dung',
+            'ngay_lap' => 'Ngày lập',
+            'ngay_su_dung' => 'Ngày sử dụng',
             'so_hoa_son' => 'Số hóa đơn',
-            'ngay_phat_hanh_hd' => 'Ngay Phat Hanh Hd',
-            'loai_hoa_don' => 'Loai Hoa Don',
-            'thue_suat' => 'Thue Suat',
-            'ma_kh' => 'Ma Kh',
-            'ma_tk_chinh' => 'Ma Tk Chinh',
-            'ma_kho' => 'Ma Kho',
-            'ma_nvc' => 'Ma Nvc',
+            'ngay_phat_hanh_hd' => 'Ngày phát hành HD',
+            'loai_hoa_don' => 'Loại hóa đơn',
+            'thue_suat' => 'Thuế suất',
+            'ma_kh' => 'Khách hàng',
+            'ma_tk_chinh' => 'Tài khoản chính',
+            'ma_kho' => 'Kho',
+            'ma_nvc' => 'Nhà vận chuyển',
         ];
     }
 
@@ -127,7 +128,7 @@ class PhieuMuaTs extends \yii\db\ActiveRecord
 
     public static function lastId()
     {
-        return 1;
+        return rand(1,999);
     }
 
     public function getSoPhieu() {

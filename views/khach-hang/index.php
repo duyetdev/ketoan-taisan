@@ -10,27 +10,39 @@ use yii\widgets\Pjax;
 $this->title = 'DS Khách Hàng';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
-<div class="khach-hang-index">
 
-    <h1><?= Html::encode($this->title) ?></h1>
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+<div class="row">
+  <div class="col-md-9">
+        <div class="khach-hang-index">
 
-    <p>
-        <?= Html::a('Create Khach Hang', ['create'], ['class' => 'btn btn-success']) ?>
-    </p>
-<?php Pjax::begin(); ?>    <?= GridView::widget([
-        'dataProvider' => $dataProvider,
-        'filterModel' => $searchModel,
-        'columns' => [
-            ['class' => 'yii\grid\SerialColumn'],
+            <h1><?= Html::encode($this->title) ?></h1>
+            <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
 
-            'ma_kh',
-            'ten_kh',
-            'dia_chi',
-            'ma_so_thue',
-            'so_tai_khoan',
+            <p>
+                <?= Html::a('Create Khach Hang', ['create'], ['class' => 'btn btn-success']) ?>
+            </p>
+        <?php Pjax::begin(); ?>    <?= GridView::widget([
+                'dataProvider' => $dataProvider,
+                // 'filterModel' => $searchModel,
+                'columns' => [
+                    ['class' => 'yii\grid\SerialColumn'],
 
-            ['class' => 'yii\grid\ActionColumn'],
-        ],
-    ]); ?>
-<?php Pjax::end(); ?></div>
+                    'ma_kh',
+                    'ten_kh',
+                    'dia_chi',
+                    'ma_so_thue',
+                    'so_tai_khoan',
+
+                    ['class' => 'yii\grid\ActionColumn'],
+                ],
+            ]); ?>
+        <?php Pjax::end(); ?></div>
+    </div>
+    <div class="col-md-3">
+
+        <h1>Thêm mới</h1>
+        <?= $this->render('_form', [
+            'model' => $model,
+        ]) ?>
+    </div>
+  </div>
