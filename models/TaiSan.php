@@ -48,12 +48,12 @@ class TaiSan extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ma_ts' => 'Ma Ts',
-            'ten_ts' => 'Ten Ts',
-            'dvt' => 'Dvt',
-            'nguyen_gia' => 'Nguyen Gia',
-            'so_nam_khau_hao' => 'So Nam Khau Hao',
-            'ma_lts' => 'Ma Lts',
+            'ma_ts' => 'Mã TS',
+            'ten_ts' => 'Tên Ts',
+            'dvt' => 'Đơn vị tính',
+            'nguyen_gia' => 'Nguyên giá',
+            'so_nam_khau_hao' => 'Số năm khấu hao',
+            'ma_lts' => 'Loại tài sản',
         ];
     }
 

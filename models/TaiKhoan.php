@@ -43,8 +43,8 @@ class TaiKhoan extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ma_tk' => 'Ma Tk',
-            'ten_tk' => 'Ten Tk',
+            'ma_tk' => 'Mã Tk',
+            'ten_tk' => 'Tên Tk',
         ];
     }
 

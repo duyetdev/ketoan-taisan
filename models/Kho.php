@@ -43,9 +43,9 @@ class Kho extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ma_kho' => 'Ma Kho',
-            'ten_kho' => 'Ten Kho',
-            'dia_chi' => 'Dia Chi',
+            'ma_kho' => 'Mã kho',
+            'ten_kho' => 'Tên kho',
+            'dia_chi' => 'Địa chỉ',
             'sdt' => 'Sdt',
         ];
     }

@@ -47,10 +47,10 @@ class ChiTietPhieuBan extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'so_pb' => 'So Pb',
-            'ma_ts' => 'Ma Ts',
-            'tk_doi_ung' => 'Tk Doi Ung',
-            'so_tien' => 'So Tien',
+            'so_pb' => 'Số phiếu',
+            'ma_ts' => 'Mã tài sản',
+            'tk_doi_ung' => 'Tài khoản đối ứng',
+            'so_tien' => 'Số tiền',
         ];
     }
 

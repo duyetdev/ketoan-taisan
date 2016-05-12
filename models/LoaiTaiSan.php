@@ -40,8 +40,8 @@ class LoaiTaiSan extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ma_lts' => 'Ma Lts',
-            'ten_loai' => 'Ten Loai',
+            'ma_lts' => 'Mã loại tài sản',
+            'ten_loai' => 'Tên loại',
         ];
     }
 

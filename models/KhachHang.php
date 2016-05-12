@@ -46,11 +46,11 @@ class KhachHang extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ma_kh' => 'Ma Kh',
-            'ten_kh' => 'Ten Kh',
-            'dia_chi' => 'Dia Chi',
-            'ma_so_thue' => 'Ma So Thue',
-            'so_tai_khoan' => 'So Tai Khoan',
+            'ma_kh' => 'Mã KH',
+            'ten_kh' => 'Tên khách hàng',
+            'dia_chi' => 'Địa chỉ',
+            'ma_so_thue' => 'Mã số thuế',
+            'so_tai_khoan' => 'Số tài khoản',
         ];
     }
 

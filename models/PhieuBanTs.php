@@ -44,7 +44,7 @@ class PhieuBanTs extends \yii\db\ActiveRecord
             [['so_pb', 'ma_kh', 'ma_tk', 'ma_kho', 'ma_nvc'], 'integer'],
             [['ngay_ban', 'so_hoa_don', 'ngay_hoa_don', 'loai_hoa_don', 'thue_suat'], 'string', 'max' => 45],
             [['ma_kh'], 'exist', 'skipOnError' => true, 'targetClass' => KhachHang::className(), 'targetAttribute' => ['ma_kh' => 'ma_kh']],
-            [['ly_do'], 'string', 'max' => 255], 
+            [['ly_do'], 'string', 'max' => 255],
             [['ma_tk'], 'exist', 'skipOnError' => true, 'targetClass' => TaiKhoan::className(), 'targetAttribute' => ['ma_tk' => 'ma_tk']],
             [['ma_kho'], 'exist', 'skipOnError' => true, 'targetClass' => Kho::className(), 'targetAttribute' => ['ma_kho' => 'ma_kho']],
             [['ma_nvc'], 'exist', 'skipOnError' => true, 'targetClass' => KhachHang::className(), 'targetAttribute' => ['ma_nvc' => 'ma_kh']],
@@ -57,17 +57,17 @@ class PhieuBanTs extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'so_pb' => 'So Pb',
-            'ngay_ban' => 'Ngay Ban',
-            'so_hoa_don' => 'So Hoa Don',
-            'ngay_hoa_don' => 'Ngay Hoa Don',
-            'loai_hoa_don' => 'Loai Hoa Don',
-            'thue_suat' => 'Thue Suat',
-            'ma_kh' => 'Ma Kh',
-            'ma_tk' => 'Ma Tk',
+            'so_pb' => 'Số phiếu',
+            'ngay_ban' => 'Ngày bán',
+            'so_hoa_don' => 'Số hóa đơn',
+            'ngay_hoa_don' => 'Ngày hóa đơn',
+            'loai_hoa_don' => 'Loại hóa đơn',
+            'thue_suat' => 'Thuế suất',
+            'ma_kh' => 'Khách hàng',
+            'ma_tk' => 'Tài khoản',
             'ly_do' => 'Lý do',
-            'ma_kho' => 'Ma Kho',
-            'ma_nvc' => 'Ma Nvc',
+            'ma_kho' => 'Kho',
+            'ma_nvc' => 'Người vận chuyển',
         ];
     }
 
