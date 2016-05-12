@@ -24,17 +24,32 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
 
-            'so_pm',
-            'ma_kh',
-            'ma_tk_chinh',
-            'ma_kho',
-            'ma_nvc',
+            'so_phieu',
+            [
+              'attribute'=>'ma_kh',
+              'value'=> function($model) { return $model->getMaKh()->one()->ten_kh; },
+            ],
+            [
+              'attribute'=>'ma_tk_chinh',
+              'value'=> function($model) { return $model->getMaTkChinh()->one()->ten_tk; },
+            ],
+            [
+              'attribute'=>'ma_kho',
+              'value'=> function($model) { return $model->getMaKho()->one()->ten_kho; },
+            ],
+            [
+              'attribute'=>'ma_nvc',
+              'value'=> function($model) { return $model->getMaNvc()->one()->ten_kh; },
+            ],
             'so_hoa_son',
             'ngay_phat_hanh_hd',
             'loai_hoa_don',
-            'thue_suat',
-            'ngay_lap',
-            'ngay_su_dung',
+            [
+              'attribute'=>'thue_suat',
+              'value'=> function($model) { return $model->thue_suat ? $model->thue_suat . '%' : ''; },
+            ],
+            //'ngay_lap',
+            //'ngay_su_dung',
 
 
             ['class' => 'yii\grid\ActionColumn'],

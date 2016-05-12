@@ -13,7 +13,8 @@ use yii\jui\DatePicker;
 $khachhang = \app\models\KhachHang::find()->asArray()->all();
 $tai_khoan = \app\models\TaiKhoan::find()->asArray()->all();
 $kho = \app\models\Kho::find()->asArray()->all();
-
+$errors = $model->getErrors();
+// print_r($errors);die;
 $last_id = \app\models\PhieuMuaTs::lastId() + 1;
 $maphieu = 'NTSA' . str_pad($last_id, 5, '0', STR_PAD_LEFT) . '-' . date('m-y');
 
@@ -23,16 +24,23 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
 
 <script type="text/javascript">
   var khachhang = <?= json_encode($khachhang); ?>;
+  var kho = <?= json_encode($kho); ?>;
 
 </script>
 
 <div class="phieu-mua-ts-form">
 
-<div class="row">
-    <div class="col-md-12">
-      <?php print_r($model->getErrors()); ?>
-    </div>
-</div>
+<?php if ($errors): ?>
+  <div class="row">
+      <div class="col-md-12">
+        <div class="alert alert-danger">
+          <?php foreach ($errors as $value) {
+            echo $value[0] . ' <br />';
+          } ?>
+        </div>
+      </div>
+  </div>
+<?php endif; ?>
 
 <div class="row">
   <div class="col-md-2">
@@ -67,6 +75,8 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
           <div class="form-group">
             <label class="control-label col-sm-4">Người giao hàng:</label>
 
+            <input type="hidden" name="chi-tiet-phieu-mua" value="">
+
             <div class="col-sm-7">
               <?= Html::activeDropDownList($model, 'ma_nvc',
               ArrayHelper::map($khachhang, 'ma_kh', 'ten_kh'),
@@ -85,8 +95,6 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
 
 
           <?= $form->field($model, 'so_phieu')->textInput(['value' => $maphieu]) ?>
-
-          <?= $form->field($model, 'so_hoa_son')->textInput() ?>
 
           <div class="form-group">
             <label class="control-label col-sm-4">Số hóa đơn:</label>
@@ -198,6 +206,23 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
 <script type="text/javascript">
     window.t = $('#chi-tiet-phieu-mua').DataTable();
 
+    // $(document).ready(function() {
+    // $('#chi-tiet-phieu-mua').on('page.dt', function() {
+    //   alert(window.t.rows().data())
+    // }); 
+    // }); 
+
+    function updateFormData() {
+      var x = window.t.rows().data()
+      var data = []
+
+      for (var i = 0; i < x.length; ++i)
+        data[i] = x[i];
+
+      $('[name=chi-tiet-phieu-mua]').val(JSON.stringify(data));
+    }
+
+
     function add() {
       var data = [0];
       var ok = false;
@@ -210,6 +235,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
       if (!ok) return alert('Error, please try again!');
       window.t.row.add(data).draw(true);
       $('#form-chitiet').modal('hide');
+      updateFormData();
     };
 
     $('#address').text(khachhang[0].dia_chi);
@@ -219,6 +245,17 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
       for (var i in khachhang) {
         if (khachhang[i].ma_kh == id) {
           $('#address').text(khachhang[i].dia_chi);
+        }
+      }
+    });
+
+    $('#kho').text(kho[0].ten_kho);
+    $('#phieumuats-ma_kho').on('change', function(e) {
+      var id = $(this).val();
+      var dc = '';
+      for (var i in kho) {
+        if (kho[i].ma_kho == id) {
+          $('#kho').text(kho[i].ten_kho);
         }
       }
     });

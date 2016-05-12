@@ -78,7 +78,40 @@ class PhieuMuaTsController extends Controller
 
         $kho = \app\models\Kho::find()->all();
 
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $chiTietPhieuMua = Yii::$app->request->post()['chi-tiet-phieu-mua'];
+            $phieuMua = $model;
+            $chiTietPhieuMua = json_decode($chiTietPhieuMua);
+
+            if (count($chiTietPhieuMua)) {
+
+                foreach ($chiTietPhieuMua as $key => $item) {
+
+                    $ts = new \app\models\TaiSan();
+                    $ts->ten_ts = $item[1];
+                    $ts->ma_lts = $item[2];
+                    $ts->so_nam_khau_hao = $item[6];
+                    $ts->nguyen_gia = $item[7];
+                    $ts->dvt = $item[4];
+                    if ($ts->save()) {
+                        $ct = new \app\models\ChiTietPhieuMua();
+                        $ct->so_pm = $phieuMua->so_pm;
+                        $ct->ma_ts = $ts->ma_ts;
+                        $ct->tk_doi_ung = $item[2]; // Ma so
+                        $ct->so_tien = $ts->nguyen_gia * intval($item[3]);
+                        if (!$ct->save()) {
+                            echo 'Lỗi nhập chi tiết phiếu mua!';
+                            die;
+                        }
+                    } else {
+                        echo 'Lỗi nhập TS!';
+                        print_r($ts->getErrors());
+                        die;
+                    }
+                }
+            }
+
             return $this->redirect(['view', 'id' => $model->so_pm]);
         } else {
             return $this->render('create', [

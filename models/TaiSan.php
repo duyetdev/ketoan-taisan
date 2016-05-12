@@ -34,7 +34,7 @@ class TaiSan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ma_ts'], 'required'],
+            // [['ma_ts'], 'required'],
             [['ma_ts', 'nguyen_gia', 'so_nam_khau_hao', 'ma_lts'], 'integer'],
             [['ten_ts', 'dvt'], 'string', 'max' => 45],
             [['ma_ts'], 'exist', 'skipOnError' => true, 'targetClass' => ChiTietPhieuMua::className(), 'targetAttribute' => ['ma_ts' => 'ma_ts']],
