@@ -61,8 +61,18 @@ class PhieuMuaTsController extends Controller
      */
     public function actionView($id)
     {
+        $a = $this->getNextID($id);
+        $b = $this->getPrevID($id);
+        $c = $this->getNewSmallestID();
+        print_r($a);
+        print_r($b);
+        print_r($c);
+        //die;
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'a' => $a,
+            'b' => $b,
+            'c' => $c,
         ]);
     }
 
@@ -167,5 +177,23 @@ class PhieuMuaTsController extends Controller
         } else {
             throw new NotFoundHttpException('The requested page does not exist.');
         }
+    }
+
+    public function getNextID($cur_id)
+    {
+        return Yii::$app->db->createCommand("select f_getNextID(".intval($cur_id).")")
+        ->queryAll();
+    }
+
+    public function getPrevID($cur_id)
+    {
+        return Yii::$app->db->createCommand("select f_getPrevID(".$cur_id.")")
+        ->queryAll();
+    }
+
+    public function getNewSmallestID()
+    {
+        return Yii::$app->db->createCommand("select f_getNewSmallestID()")
+        ->queryAll();
     }
 }
