@@ -10,6 +10,8 @@ use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use app\models\TaiKhoan;
+use app\models\LoaiTSTaiKhoan;
 
 /**
  * PhieuMuaTsController implements the CRUD actions for PhieuMuaTs model.
@@ -61,18 +63,18 @@ class PhieuMuaTsController extends Controller
      */
     public function actionView($id)
     {
-        $a = $this->getNextID($id);
-        $b = $this->getPrevID($id);
-        $c = $this->getNewSmallestID();
-        print_r($a);
-        print_r($b);
-        print_r($c);
+        //$a = $this->getNextID($id);
+        // $b = $this->getPrevID($id);
+        // $c = $this->getNewSmallestID();
+        // print_r($a);
+        // print_r($b);
+        // print_r($c);
         //die;
         return $this->render('view', [
             'model' => $this->findModel($id),
-            'a' => $a,
-            'b' => $b,
-            'c' => $c,
+            // 'a' => $a,
+            // 'b' => $b,
+            // 'c' => $c,
         ]);
     }
 
@@ -88,6 +90,8 @@ class PhieuMuaTsController extends Controller
 
         $kho = \app\models\Kho::find()->all();
 
+        $last_id = $this->getNewSmallestID()[0]['id'];
+        $model->so_phieu = 'NTSA' . str_pad($last_id, 5, '0', STR_PAD_LEFT) . '-' . date('m-y');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $chiTietPhieuMua = Yii::$app->request->post()['chi-tiet-phieu-mua'];
@@ -100,24 +104,36 @@ class PhieuMuaTsController extends Controller
 
                     $ts = new \app\models\TaiSan();
                     $ts->ten_ts = $item[1];
-                    $ts->ma_lts = $item[2];
-                    $ts->so_nam_khau_hao = $item[6];
-                    $ts->nguyen_gia = $item[7];
+                    $ts->ma_lts = intval($item[2]);
+                    $ts->so_nam_khau_hao = intval($item[6]);
+                    $ts->nguyen_gia = $this->getPrice($item[7]);
                     $ts->dvt = $item[4];
                     if ($ts->save()) {
                         $ct = new \app\models\ChiTietPhieuMua();
                         $ct->so_pm = $phieuMua->so_pm;
                         $ct->ma_ts = $ts->ma_ts;
-                        $ct->tk_doi_ung = $item[2]; // Ma so
+
+                        // Lay tk doi ung tu ma_lts
+                        $tai_khoan_doi_ung = LoaiTSTaiKhoan::find()->where(['ma_lts' => $ts->ma_lts])->one();
+                        if ($tai_khoan_doi_ung)
+                            $ct->tk_doi_ung = $tai_khoan_doi_ung->ma_tk;
+                        else 
+                            $ct->tk_doi_ung = null; // Ma so
                         $ct->so_tien = $ts->nguyen_gia * intval($item[3]);
                         if (!$ct->save()) {
-                            echo 'Lỗi nhập chi tiết phiếu mua!';
+                            echo 'Lỗi nhập chi tiết phiếu mua! <br />';
+                            print_r($ct->getErrors());
                             die;
                         }
                     } else {
                         echo 'Lỗi nhập TS!';
                         print_r($ts->getErrors());
                         die;
+                        return $this->render('create', [
+                            'model' => $model,
+                            'kho' => $kho,
+                            'nextId' => $this->getNewSmallestID()
+                        ]);
                     }
                 }
             }
@@ -127,6 +143,7 @@ class PhieuMuaTsController extends Controller
             return $this->render('create', [
                 'model' => $model,
                 'kho' => $kho,
+                'nextId' => $this->getNewSmallestID()
             ]);
         }
     }
@@ -148,6 +165,12 @@ class PhieuMuaTsController extends Controller
                 'model' => $model,
             ]);
         }
+    }
+
+    public function getPrice($string) {
+        $number = preg_replace("/[^0-9]/", "", $string);
+
+        return intval($number);
     }
 
     /**
@@ -193,7 +216,7 @@ class PhieuMuaTsController extends Controller
 
     public function getNewSmallestID()
     {
-        return Yii::$app->db->createCommand("select f_getNewSmallestID()")
+        return Yii::$app->db->createCommand("select f_getNewSmallestID() as id")
         ->queryAll();
     }
 }

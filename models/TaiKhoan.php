@@ -80,6 +80,14 @@ class TaiKhoan extends \yii\db\ActiveRecord
         return $this->hasMany(PhieuMuaTs::className(), ['ma_tk_chinh' => 'ma_tk']);
     }
 
+       /** 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getLoaiTSTaiKhoans() 
+   { 
+       return $this->hasMany(LoaiTSTaiKhoan::className(), ['ma_tk' => 'ma_tk']); 
+   }
+
     /**
      * @inheritdoc
      * @return TaiKhoanQuery the active query used by this AR class.

@@ -13,6 +13,12 @@ use yii\jui\DatePicker;
 $khachhang = \app\models\KhachHang::find()->asArray()->all();
 $tai_khoan = \app\models\TaiKhoan::find()->asArray()->all();
 $kho = \app\models\Kho::find()->asArray()->all();
+$loai_ts_model = \app\models\LoaiTaiSan::find()->asArray()->all();
+$loai_ts = [];
+foreach ($loai_ts_model as $loat_t) {
+  $loai_ts[$loat_t['ma_lts']] = $loat_t['ten_loai'];
+}
+
 $errors = $model->getErrors();
 // print_r($errors);die;
 $last_id = \app\models\PhieuMuaTs::lastId() + 1;
@@ -42,23 +48,6 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
   </div>
 <?php endif; ?>
 
-<div class="row">
-  <div class="col-md-2">
-    Đơn vị: <i>Cty CPTM xxx</i><br />
-    Kho: <i id="kho"></i>
-
-  </div>
-
-</div>
-
-  <div class="row text-center">
-    <h1>Phiếu mua tài sản</h1>
-    <p>
-      <i>Ngày <?= date('d') ?> tháng <?= date('m') ?> năm <?= date('Y') ?></i>
-    </p>
-  </div>
-
-  <div class="row">
       <?php $form = ActiveForm::begin([
           'layout' => 'horizontal',
           'fieldConfig' => [
@@ -71,19 +60,39 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
               ],
           ],
       ]); ?>
-      <div class="col-md-6">
-          <div class="form-group">
-            <label class="control-label col-sm-4">Người giao hàng:</label>
 
-            <input type="hidden" name="chi-tiet-phieu-mua" value="">
+<div class="row">
+  <div class="col-md-2">
+    Đơn vị: <i>Cty CPTM xxx</i><br />
+    Kho: <i id="kho"></i>
+
+  </div>
+  <div class="col-md-4 col-md-offset-6 text-right">
+    <?= $form->field($model, 'so_phieu')->textInput() ?>
+  </div>
+</div>
+
+  <div class="row text-center">
+    <h1>Phiếu mua tài sản</h1>
+    <p>
+      <i>Ngày <?= date('d') ?> tháng <?= date('m') ?> năm <?= date('Y') ?></i>
+    </p>
+  </div>
+
+  <div class="row">
+      <div class="col-md-6">
+
+
+
+          <div class="form-group">
+            <label class="control-label col-sm-4">Nhà cung cấp:</label>
 
             <div class="col-sm-7">
-              <?= Html::activeDropDownList($model, 'ma_nvc',
-              ArrayHelper::map($khachhang, 'ma_kh', 'ten_kh'),
-              ['class' => 'form-control ma_nvc']); ?>
+              <?= Html::activeDropDownList($model, 'ma_kh',
+              ArrayHelper::map($khachhang, 'ma_kh', function($i) { return $i['ten_kh'] . ' - Mã NCC: ' . $i['ma_kh']; }),
+              ['class' => 'form-control ncc']); ?>
             </div>
           </div>
-
 
           <div class="form-group">
             <label class="control-label col-sm-4">Địa chỉ:</label>
@@ -93,8 +102,23 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
             </div>
           </div>
 
+          <div class="form-group">
+            <label class="control-label col-sm-4">Người giao hàng:</label>
 
-          <?= $form->field($model, 'so_phieu')->textInput(['value' => $maphieu]) ?>
+            <input type="hidden" name="chi-tiet-phieu-mua" value="">
+
+            <div class="col-sm-7">
+              <?= Html::activeDropDownList($model, 'ma_nvc',
+              ArrayHelper::map($khachhang, 'ma_kh', function($i) { return $i['ten_kh'] . ' - Mã KH: ' . $i['ma_kh']; }),
+              ['class' => 'form-control ma_nvc']); ?>
+            </div>
+          </div>
+
+
+
+
+
+          
 
           <div class="form-group">
             <label class="control-label col-sm-4">Số hóa đơn:</label>
@@ -107,15 +131,6 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-sm-4">của:</label>
-
-            <div class="col-sm-4">
-              <?= Html::activeDropDownList($model, 'ma_kh',
-              ArrayHelper::map($khachhang, 'ma_kh', 'ten_kh'),
-              ['class' => 'form-control']); ?>
-            </div>
-          </div>
 
           <?= $form->field($model, 'ly_do')->textArea(['label' => '']) ?>
 
@@ -144,7 +159,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
 
             <div class="col-sm-7">
               <?= Html::activeDropDownList($model, 'ma_tk_chinh',
-                ArrayHelper::map($tai_khoan, 'ma_tk', 'ten_tk'),
+                ArrayHelper::map($tai_khoan, 'ma_tk', function($i) { return $i['ma_tk'] . ' - ' . $i['ten_tk']; }),
                 ['class' => 'form-control']); ?>
             </div>
           </div>
@@ -202,9 +217,23 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
 <script type="text/javascript" src="/js/jquery-1.12.0.min.js"></script>
 <script type="text/javascript" src="/js/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="/js/dataTables.bootstrap4.min.js"></script>
+<script type="text/javascript" src="/js/jquery.price_format.2.0.min.js"></script>
 
 <script type="text/javascript">
     window.t = $('#chi-tiet-phieu-mua').DataTable();
+
+    jQuery(document).ready(function($) {
+      
+      $('#nguyen_gia').priceFormat({
+          prefix: '',
+          centsSeparator: ',',
+          thousandsSeparator: '.',
+          centsLimit: 0,
+          clearPrefix: true,
+          suffix: ' VND'
+      });
+
+    });
 
     // $(document).ready(function() {
     // $('#chi-tiet-phieu-mua').on('page.dt', function() {
@@ -226,9 +255,9 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
     function add() {
       var data = [0];
       var ok = false;
-      $('#chitiet-form input').each(function(i, e) {
+      $('#chitiet-form input, #chitiet-form select').each(function(i, e) {
         data[i] = $(e).val();
-        $(e).val('');
+        // $(e).val('');
         if (data[i].length > 0) ok = true;
       });
 
@@ -239,7 +268,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
     };
 
     $('#address').text(khachhang[0].dia_chi);
-    $('.ma_nvc').on('change', function(e) {
+    $('.ncc').on('change', function(e) {
       var id = $(this).val();
       var dc = '';
       for (var i in khachhang) {
@@ -279,33 +308,40 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
             </div>
 
             <div class="form-group">
-              <label for="">Mã số</label>
-              <input type="text" class="form-control" id="name" placeholder="">
+              <label for="">Loại tài sản</label>
+              <!-- <input type="text" class="form-control" id="ma_so" placeholder=""> -->
+              <select name='ma_lts' class="form-control">
+                <?php
+                  foreach ($loai_ts as $key => $value) {
+                    echo '<option value="'. $key .'">' . $value . '</option>';
+                  }
+                ?>
+              </select>
             </div>
 
             <div class="form-group">
               <label for="">SL</label>
-              <input type="text" class="form-control" id="name" placeholder="" value="1">
+              <input type="text" class="form-control" id="sl" placeholder="" value="1">
             </div>
 
             <div class="form-group">
               <label for="">DVT</label>
-              <input type="text" class="form-control" id="name" placeholder="" value="Cái">
+              <input type="text" class="form-control" id="dvt" placeholder="" value="Cái">
             </div>
 
             <div class="form-group">
               <label for="">Ngày SD</label>
-              <input type="text" class="form-control" id="name" placeholder="" value="<?= date('d-m-Y') ?>">
+              <input type="text" class="form-control" id="ngaysd" placeholder="" value="<?= date('d-m-Y') ?>">
             </div>
 
             <div class="form-group">
               <label for="">Số năm khấu hao</label>
-              <input type="text" class="form-control" id="name" value="10">
+              <input type="text" class="form-control" id="so_nam_khau_hao" value="10">
             </div>
 
             <div class="form-group">
               <label for="">Nguyên giá</label>
-              <input type="text" class="form-control" id="name" placeholder="">
+              <input type="text" class="form-control" id="nguyen_gia" placeholder="">
             </div>
 
           </form>

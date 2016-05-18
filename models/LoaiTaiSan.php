@@ -53,6 +53,14 @@ class LoaiTaiSan extends \yii\db\ActiveRecord
         return $this->hasMany(TaiSan::className(), ['ma_lts' => 'ma_lts']);
     }
 
+       /** 
+    * @return \yii\db\ActiveQuery 
+    */ 
+   public function getLoaiTSTaiKhoans() 
+   { 
+       return $this->hasMany(LoaiTSTaiKhoan::className(), ['ma_lts' => 'ma_lts']); 
+   }
+
     /**
      * @inheritdoc
      * @return LoaiTaiSanQuery the active query used by this AR class.
