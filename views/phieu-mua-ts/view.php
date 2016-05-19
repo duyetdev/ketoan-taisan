@@ -16,10 +16,11 @@ $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so
 ?>
 
 <style type="text/css">
+    
     .phieu-mua-ts-view {
-        font-family: "time news roman" !important;
         font-size: 15px;
     }
+
     .nguoi_giao_hang {
         text-transform: uppercase;
     }
@@ -27,17 +28,41 @@ $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so
         text-align: center;
         font-weight: 700;
     }
+
+    @media print {
+        .tools, .breadcrumb {
+            display: none;
+        }
+
+        .phieu-mua-ts-view, .phieu-mua-ts-view h2 {
+            font-family: "time news roman" !important;
+        }
+
+        .phieu-mua-ts-view {
+            font-size: 13px;
+        }
+
+        .phieu-mua-ts-view h2 {
+            font-size: 21px;
+        }
+    }
 </style>
+
+
+<div class="row tools">
+    
+</div>
 
 <div class="phieu-mua-ts-view">
 
+
 <div class="row">
-  <div class="col-md-2">
+  <div class="col-xs-3">
     Đơn vị: <b>Cty CPTM xxx</b><br />
     Kho: <?php echo $model->getMaKho()->one()->ten_kho; ?>
 
   </div>
-  <div class="col-md-3 col-md-offset-7 text-center">
+  <div class="col-xs-4 col-xs-offset-5 text-center">
     <b>Mẫu số : 01 - VT</b> <br />
     Ban hành theo QĐ số 16/2006/QĐ-BTC ngày 20/03/2006 của bộ trưởng BTC)
   </div>
@@ -110,7 +135,7 @@ $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so
                     ?>
             </tbody>
             <tfoot>
-                <tr>
+                <tr style="font-weight: 700">
                     <td></td>
                     <td>Cộng</td>
                     <td></td>
@@ -184,7 +209,7 @@ $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so
 
 </div>
 
-<div class="row">
+<div class="row tools">
         <br />
         <br />
         <br />
@@ -192,8 +217,10 @@ $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so
         <br />
         <br />
         <p>
-            <?= Html::a('Update', ['update', 'id' => $model->so_pm], ['class' => 'btn btn-primary']) ?>
-            <?= Html::a('Delete', ['delete', 'id' => $model->so_pm], [
+                <a href="javascript:window.print()" class="btn btn-primary">In </a>
+           
+            <?= Html::a('Cập nhật', ['update', 'id' => $model->so_pm], ['class' => 'btn btn-primary']) ?>
+            <?= Html::a('Xóa', ['delete', 'id' => $model->so_pm], [
                 'class' => 'btn btn-danger',
                 'data' => [
                     'confirm' => 'Are you sure you want to delete this item?',
