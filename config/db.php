@@ -2,8 +2,10 @@
 
 return [
     'class' => 'yii\db\Connection',
-    'dsn' => 'mysql:host=localhost;dbname=ketoan',
+    'dsn' => 'mysql:host=localhost;dbname=ketoan-3',
     'username' => 'root',
-    'password' => '123456',
+
+    'password' => '1234',
+
     'charset' => 'utf8',
 ];

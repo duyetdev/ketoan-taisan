@@ -9,7 +9,9 @@ use Yii;
  *
  * @property integer $ma_lts
  * @property string $ten_loai
+ * @property integer $ma_tk
  *
+ * @property TaiKhoan $maTk
  * @property TaiSan[] $taiSans
  */
 class LoaiTaiSan extends \yii\db\ActiveRecord
@@ -28,9 +30,10 @@ class LoaiTaiSan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ma_lts'], 'required'],
-            [['ma_lts'], 'integer'],
+            [['ma_tk'], 'required'],
+            [['ma_tk'], 'integer'],
             [['ten_loai'], 'string', 'max' => 45],
+            [['ma_tk'], 'exist', 'skipOnError' => true, 'targetClass' => TaiKhoan::className(), 'targetAttribute' => ['ma_tk' => 'ma_tk']],
         ];
     }
 
@@ -40,9 +43,18 @@ class LoaiTaiSan extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'ma_lts' => 'Mã loại tài sản',
-            'ten_loai' => 'Tên loại',
+            'ma_lts' => 'Ma Lts',
+            'ten_loai' => 'Ten Loai',
+            'ma_tk' => 'Ma Tk',
         ];
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
+    public function getMaTk()
+    {
+        return $this->hasOne(TaiKhoan::className(), ['ma_tk' => 'ma_tk']);
     }
 
     /**
@@ -51,22 +63,5 @@ class LoaiTaiSan extends \yii\db\ActiveRecord
     public function getTaiSans()
     {
         return $this->hasMany(TaiSan::className(), ['ma_lts' => 'ma_lts']);
-    }
-
-       /** 
-    * @return \yii\db\ActiveQuery 
-    */ 
-   public function getLoaiTSTaiKhoans() 
-   { 
-       return $this->hasMany(LoaiTSTaiKhoan::className(), ['ma_lts' => 'ma_lts']); 
-   }
-
-    /**
-     * @inheritdoc
-     * @return LoaiTaiSanQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new LoaiTaiSanQuery(get_called_class());
     }
 }

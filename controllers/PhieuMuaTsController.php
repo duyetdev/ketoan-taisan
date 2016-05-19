@@ -63,17 +63,18 @@ class PhieuMuaTsController extends Controller
      */
     public function actionView($id)
     {
-        //$a = $this->getNextID($id);
-        // $b = $this->getPrevID($id);
+        $nextId = $this->getNextID($id);
+        $prevId = $this->getPrevID($id);
         // $c = $this->getNewSmallestID();
         // print_r($a);
         // print_r($b);
         // print_r($c);
         //die;
+
         return $this->render('view', [
             'model' => $this->findModel($id),
-            // 'a' => $a,
-            // 'b' => $b,
+            'nextId' => $nextId,
+            'prevId' => $prevId,
             // 'c' => $c,
         ]);
     }
@@ -91,6 +92,7 @@ class PhieuMuaTsController extends Controller
         $kho = \app\models\Kho::find()->all();
 
         $last_id = $this->getNewSmallestID()[0]['id'];
+        // $model->so_pm = $last_id;
         $model->so_phieu = 'NTSA' . str_pad($last_id, 5, '0', STR_PAD_LEFT) . '-' . date('m-y');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
@@ -113,12 +115,6 @@ class PhieuMuaTsController extends Controller
                         $ct->so_pm = $phieuMua->so_pm;
                         $ct->ma_ts = $ts->ma_ts;
 
-                        // Lay tk doi ung tu ma_lts
-                        $tai_khoan_doi_ung = LoaiTSTaiKhoan::find()->where(['ma_lts' => $ts->ma_lts])->one();
-                        if ($tai_khoan_doi_ung)
-                            $ct->tk_doi_ung = $tai_khoan_doi_ung->ma_tk;
-                        else 
-                            $ct->tk_doi_ung = null; // Ma so
                         $ct->so_tien = $ts->nguyen_gia * intval($item[3]);
                         if (!$ct->save()) {
                             echo 'Lỗi nhập chi tiết phiếu mua! <br />';
@@ -126,7 +122,7 @@ class PhieuMuaTsController extends Controller
                             die;
                         }
                     } else {
-                        echo 'Lỗi nhập TS!';
+                        echo 'Lỗi nhập TS! <br />';
                         print_r($ts->getErrors());
                         die;
                         return $this->render('create', [
@@ -204,14 +200,18 @@ class PhieuMuaTsController extends Controller
 
     public function getNextID($cur_id)
     {
-        return Yii::$app->db->createCommand("select f_getNextID(".intval($cur_id).")")
+        $id = Yii::$app->db->createCommand("select f_getNextID(".intval($cur_id).") as id")
         ->queryAll();
+
+        return $id[0]['id'];
     }
 
     public function getPrevID($cur_id)
     {
-        return Yii::$app->db->createCommand("select f_getPrevID(".$cur_id.")")
+        $id = Yii::$app->db->createCommand("select f_getPrevID(".$cur_id.") as id")
         ->queryAll();
+
+        return $id[0]['id'];
     }
 
     public function getNewSmallestID()

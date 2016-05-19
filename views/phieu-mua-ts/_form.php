@@ -16,7 +16,7 @@ $kho = \app\models\Kho::find()->asArray()->all();
 $loai_ts_model = \app\models\LoaiTaiSan::find()->asArray()->all();
 $loai_ts = [];
 foreach ($loai_ts_model as $loat_t) {
-  $loai_ts[$loat_t['ma_lts']] = $loat_t['ten_loai'];
+  $loai_ts[$loat_t['ma_lts']] = $loat_t['ten_loai'] . ' - Tài khoản: ' . $loat_t['ma_tk'];
 }
 
 $errors = $model->getErrors();
@@ -69,6 +69,16 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
   </div>
   <div class="col-md-4 col-md-offset-6 text-right">
     <?= $form->field($model, 'so_phieu')->textInput() ?>
+
+    <div class="form-group">
+      <label class="control-label col-sm-4">TK</label>
+
+      <div class="col-sm-7">
+        <?= Html::activeDropDownList($model, 'ma_tk_chinh',
+          ArrayHelper::map($tai_khoan, 'ma_tk', function($i) { return $i['ma_tk'] . ' - ' . $i['ten_tk']; }),
+          ['class' => 'form-control']); ?>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -77,12 +87,11 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
     <p>
       <i>Ngày <?= date('d') ?> tháng <?= date('m') ?> năm <?= date('Y') ?></i>
     </p>
+    <br />
   </div>
 
   <div class="row">
       <div class="col-md-6">
-
-
 
           <div class="form-group">
             <label class="control-label col-sm-4">Nhà cung cấp:</label>
@@ -94,13 +103,15 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
             </div>
           </div>
 
-          <div class="form-group">
-            <label class="control-label col-sm-4">Địa chỉ:</label>
 
-            <div class="col-sm-4">
-              <i id="address"></i>
+         <div class="form-group">
+            <label class="control-label col-sm-4">Địa chỉ NCC:</label>
+
+            <div class="col-sm-7">
+              <i class="form-control" id="address" style="cursor:disable"></i>
             </div>
           </div>
+
 
           <div class="form-group">
             <label class="control-label col-sm-4">Người giao hàng:</label>
@@ -113,30 +124,10 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
               ['class' => 'form-control ma_nvc']); ?>
             </div>
           </div>
-
-
-
-
-
           
 
+
           <div class="form-group">
-            <label class="control-label col-sm-4">Số hóa đơn:</label>
-
-            <div class="col-sm-4">
-              <?= Html::activeTextInput($model, 'so_hoa_son', ['class'=> 'form-control']); ?>
-            </div>
-            <div class="col-sm-3">
-              <?= Html::activeTextInput($model, 'ngay_phat_hanh_hd', ['class'=> 'form-control']); ?>
-            </div>
-          </div>
-
-
-          <?= $form->field($model, 'ly_do')->textArea(['label' => '']) ?>
-
-      </div>
-      <div class="col-md-6">
-            <div class="form-group">
               <label class="control-label col-sm-4">Kho</label>
 
               <div class="col-sm-7">
@@ -146,25 +137,49 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
               </div>
             </div>
 
-          <?= $form->field($model, 'ngay_phat_hanh_hd')->textInput() ?>
+          <?= $form->field($model, 'ly_do')->textArea(['label' => '']) ?>
+      </div>
+      <div class="col-md-6">
+
+
+
+          <div class="form-group">
+            <label class="control-label col-sm-4">Số hóa đơn:</label>
+
+            <div class="col-sm-7">
+              <?= Html::activeTextInput($model, 'so_hoa_son', ['class'=> 'form-control']); ?>
+            </div>
+          </div>
+
+            <div class="form-group field-phieumuats-loai_hoa_don has-success">
+              <label class="control-label col-sm-4" for="phieumuats-ngay_phat_hanh_hd">Ngày phát hành HD</label>
+              <div class="col-sm-7">
+              <input type="date" id="phieumuats-ngay_phat_hanh_hd" class="form-control" name="PhieuMuaTs[ngay_phat_hanh_hd]" maxlength="45">
+              <div class="help-block help-block-error "></div>
+              </div>
+            </div>
 
 
           <?= $form->field($model, 'loai_hoa_don')->textInput(['maxlength' => true]) ?>
 
 
-            <?= $form->field($model, 'thue_suat')->textInput() ?>
-
-            <div class="form-group">
-            <label class="control-label col-sm-4">TK</label>
-
+          <div class="form-group field-phieumuats-thue_suat">
+            <label class="control-label col-sm-4" for="phieumuats-ngay_phat_hanh_hd">Thuế suất</label>
             <div class="col-sm-7">
-              <?= Html::activeDropDownList($model, 'ma_tk_chinh',
-                ArrayHelper::map($tai_khoan, 'ma_tk', function($i) { return $i['ma_tk'] . ' - ' . $i['ten_tk']; }),
-                ['class' => 'form-control']); ?>
+              <div class="input-group">
+              <input type="text" class="form-control" id="exampleInputAmount"  name="PhieuMuaTs[thue_suat]" value="10">
+              <div class="input-group-addon">%</div>
+            </div>
             </div>
           </div>
+
       </div>
       </div>
+
+      <br />
+      <br />
+      <br />
+
 
       <div class="row">
         <div class="table-responsive">
@@ -173,7 +188,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
               <tr>
                 <th>STT</th>
                 <th>Tên, nhãn hiệu,quy cách, phẩm chất vật tư, sản phẩm</th>
-                <th>Mã số </th>
+                <th>Loại TS</th>
                 <th>SL</th>
                 <th>DVT</th>
                 <th>Ngày SD</th>
@@ -196,17 +211,17 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
             <tfoot>
               <tr>
                 <td colspan="8" class="text-center table-add-row" data-toggle="modal" data-target="#form-chitiet">
-                  +add
+                  <i><span class="glyphicon glyphicon-plus"></span> Thêm tài sản</i>
                 </td>
               </tr>
             </tfoot>
           </table>
         </div>
       </div>
-
+      <br>
       <div class="row text-center">
         <div class="form-group">
-          <?= Html::submitButton($model->isNewRecord ? 'Create' : 'Update', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
+          <?= Html::submitButton($model->isNewRecord ? 'Thêm mới' : 'Cập nhật', ['class' => $model->isNewRecord ? 'btn btn-success' : 'btn btn-primary']) ?>
         </div>
       </div>
       <?php ActiveForm::end(); ?>
@@ -253,13 +268,17 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
 
 
     function add() {
-      var data = [0];
+      if (!$('#nguyen_gia').val() || $('#nguyen_gia').val() == '0') return alert('Vui lòng nhập nguyên giá');
+      var data = [];
+
+      var ii = 0;
       var ok = false;
       $('#chitiet-form input, #chitiet-form select').each(function(i, e) {
-        data[i] = $(e).val();
+        data[ii++] = $(e).val();
         // $(e).val('');
         if (data[i].length > 0) ok = true;
       });
+      data[0] = window.t.rows().data().length + 1;
 
       if (!ok) return alert('Error, please try again!');
       window.t.row.add(data).draw(true);
@@ -296,7 +315,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
     <div class="modal-content">
       <div class="modal-header">
         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title">Modal title</h4>
+        <h4 class="modal-title">Tài sản</h4>
       </div>
       <div class="modal-body">
           <form action="" method="POST" role="form" id="chitiet-form">
@@ -347,8 +366,8 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
           </form>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary" onClick="add()">Save changes</button>
+        <button type="button" class="btn btn-default" data-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" onClick="add()">Lưu thay đổi</button>
       </div>
     </div>
   </div>

@@ -48,6 +48,7 @@ class PhieuMuaTs extends \yii\db\ActiveRecord
             [['thue_suat'], 'number'],
             [['loai_hoa_don'], 'string', 'max' => 45],
             [['so_phieu'], 'string', 'max' => 50],
+            [['ly_do'], 'string', 'max' => 50],
             [['so_pm'], 'exist', 'skipOnError' => true, 'targetClass' => ChiTietPhieuMua::className(), 'targetAttribute' => ['so_pm' => 'so_pm']],
             [['ma_kh'], 'exist', 'skipOnError' => true, 'targetClass' => KhachHang::className(), 'targetAttribute' => ['ma_kh' => 'ma_kh']],
             [['ma_tk_chinh'], 'exist', 'skipOnError' => true, 'targetClass' => TaiKhoan::className(), 'targetAttribute' => ['ma_tk_chinh' => 'ma_tk']],
@@ -62,7 +63,7 @@ class PhieuMuaTs extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'so_pm' => 'Số phiếu',
+            'so_pm' => 'Số phiếu mua',
             'so_phieu' => 'Số phiếu',
             'ngay_lap' => 'Ngày lập',
             'ngay_su_dung' => 'Ngày sử dụng',
@@ -74,6 +75,7 @@ class PhieuMuaTs extends \yii\db\ActiveRecord
             'ma_tk_chinh' => 'Tài khoản chính',
             'ma_kho' => 'Kho',
             'ma_nvc' => 'Nhà vận chuyển',
+            'ly_do' => 'Lý do',
         ];
     }
 

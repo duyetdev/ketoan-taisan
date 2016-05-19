@@ -12,6 +12,7 @@ use Yii;
  *
  * @property ChiTietPhieuBan[] $chiTietPhieuBans
  * @property ChiTietPhieuMua[] $chiTietPhieuMuas
+ * @property LoaiTaiSan[] $loaiTaiSans
  * @property PhieuBanTs[] $phieuBanTs
  * @property PhieuMuaTs[] $phieuMuaTs
  */
@@ -31,8 +32,6 @@ class TaiKhoan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ma_tk'], 'required'],
-            [['ma_tk'], 'integer'],
             [['ten_tk'], 'string', 'max' => 45],
         ];
     }
@@ -67,6 +66,14 @@ class TaiKhoan extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
+    public function getLoaiTaiSans()
+    {
+        return $this->hasMany(LoaiTaiSan::className(), ['ma_tk' => 'ma_tk']);
+    }
+
+    /**
+     * @return \yii\db\ActiveQuery
+     */
     public function getPhieuBanTs()
     {
         return $this->hasMany(PhieuBanTs::className(), ['ma_tk' => 'ma_tk']);
@@ -78,22 +85,5 @@ class TaiKhoan extends \yii\db\ActiveRecord
     public function getPhieuMuaTs()
     {
         return $this->hasMany(PhieuMuaTs::className(), ['ma_tk_chinh' => 'ma_tk']);
-    }
-
-       /** 
-    * @return \yii\db\ActiveQuery 
-    */ 
-   public function getLoaiTSTaiKhoans() 
-   { 
-       return $this->hasMany(LoaiTSTaiKhoan::className(), ['ma_tk' => 'ma_tk']); 
-   }
-
-    /**
-     * @inheritdoc
-     * @return TaiKhoanQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new TaiKhoanQuery(get_called_class());
     }
 }
