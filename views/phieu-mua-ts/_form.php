@@ -71,7 +71,7 @@ $this->registerJsFile('js/phieu-mua-ts.js', ['position' => \yii\web\View::PH_BOD
     <?= $form->field($model, 'so_phieu')->textInput() ?>
 
     <div class="form-group">
-      <label class="control-label col-sm-4">TK</label>
+      <label class="control-label col-sm-4">Tài khoản</label>
 
       <div class="col-sm-7">
         <?= Html::activeDropDownList($model, 'ma_tk_chinh',

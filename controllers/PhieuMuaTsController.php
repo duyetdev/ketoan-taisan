@@ -94,6 +94,7 @@ class PhieuMuaTsController extends Controller
         $last_id = $this->getNewSmallestID()[0]['id'];
         // $model->so_pm = $last_id;
         $model->so_phieu = 'NTSA' . str_pad($last_id, 5, '0', STR_PAD_LEFT) . '-' . date('m-y');
+        // $model->ngay_lap = date('yyyy-mm-dd');
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $chiTietPhieuMua = Yii::$app->request->post()['chi-tiet-phieu-mua'];

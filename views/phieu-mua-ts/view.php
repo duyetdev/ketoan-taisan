@@ -3,7 +3,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\PhieuMuaTs */
-$this->title = 'Phiếu mua #' . $model->so_pm;
+$this->title = 'Phiếu mua #' . $model->so_phieu;
 $this->params['breadcrumbs'][] = ['label' => 'Phiếu mua', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so_pm])->with('taiSan')->all();
@@ -13,7 +13,7 @@ $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so
         font-size: 15px;
     }
 
-    .nguoi_giao_hang {
+    .khach_hang {
         text-transform: uppercase;
     }
     .chu_ky {
@@ -101,21 +101,22 @@ $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so
 <div class="row">
     <div class="col-xs-8 col-sm-9 col-md-9 col-lg-9 text-center">
         <h2>PHIẾU NHẬP TÀI SẢN</h2>
-        <p>Ngày <?= date('d') ?> tháng <?= date('m') ?> năm <?= date('Y') ?></p>
+        <p>Ngày <?= @date_parse($model->ngay_lap)['day'] ?> tháng 
+        <?= @date_parse($model->ngay_lap)['month'] ?> năm <?= @date_parse($model->ngay_lap)['year'] ?></p>
     </div>
     <div class="col-xs-4 col-sm-3 col-md-3 col-lg-3">
         <br />
         Số: <strong><?php echo $model->so_phieu ?></strong><br />
-        Nợ: <strong>2111</strong><br />
+        Nợ: <strong>211</strong><br />
         Có: <strong><?= $model->ma_tk_chinh ?></strong><br />
         
     </div>
     <div class="row">
         <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
-            Họ và tên: <i class="nguoi_giao_hang"><?= $model->getMaNvc()->one()->ten_kh ?></i><br />
+            Họ và tên: <i class="khach_hang"><?= $model->getMaKh()->one()->ten_kh ?></i><br />
             Địa chỉ: <i><?= $model->getMaKh()->one()->dia_chi ?></i><br />
-            Theo hóa đơn số: <i class="so_hoa_don"><?= $model->so_hoa_son ?></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ngày phát hành hóa đơn:  <?= $model->ngay_phat_hanh_hd ?><br />
-            Người giao hàng: <i><?= $model->getMaKh()->one()->ten_kh ?></i><br />
+            Theo hóa đơn số: <i class="so_hoa_don"><?= $model->so_hoa_son ?></i> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Ngày phát hành hóa đơn: Ngày <?= @date_parse($model->ngay_phat_hanh_hd)['day'] ?> tháng <?= @date_parse($model->ngay_phat_hanh_hd)['month'] ?> năm <?= @date_parse($model->ngay_phat_hanh_hd)['year'] ?><br />
+            Người giao hàng: <i><?= $model->getMaNvc()->one()->ten_kh ?></i><br />
             Lý do: <i><?= $model->ly_do ?></i><br />
             Nhập tại kho: <i><?= $model->ma_kho ?> - <?= $model->getMaKho()->one()->ten_kho ?></i>
             <br />
@@ -129,7 +130,7 @@ $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so
                     <tr>
                         <th>STT</th>
                         <th>Tên, nhãn hiệu,quy cách, phẩm chất vật tư, sản phẩm</th>
-                        <th>Mã số </th>
+                        <th>Mã TKĐƯ </th>
                         <th>SL</th>
                         <!-- <th>DVT</th> -->
                         <th>Ngày SD</th>
@@ -148,7 +149,7 @@ $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so
                             <tr>
                                 <td><?= $i++ ?></td>
                                 <td><?= $item->taiSan->ten_ts ?></td>
-                                <td><?= $item->ma_ts ?></td>
+                                <td><?= $item->tk_doi_ung ?></td>
                                 <td>1</td>
                                 <td><?= $model->ngay_su_dung ? $model->ngay_su_dung : $model->ngay_lap ?></td>
                                 <td><?= $item->taiSan->so_nam_khau_hao ?></td>
@@ -197,13 +198,13 @@ $ct_phieumua = \app\models\ChiTietPhieuMua::find()->where(['so_pm' => $model->so
         </div>
     </div>
     <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
-        Số tiền viết bằng chữ: <i style="text-transform: lowercase;"><?= money_string(intval($sum + $model->thue_suat * $sum / 100)) ?></i>
+        Số tiền viết bằng chữ: <i style="text-transform: lowercase;"><?= money_string(intval($sum + $model->thue_suat * $sum / 100)) ?> đồng</i>
     </div>
     <br />
     <br />
     <div class="row">
         <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 text-right">
-            Nhập, ngày ...... tháng ..... năm ......
+            <span contenteditable="true">Tp. Hồ Chí Minh</span>, ngày <span contenteditable="true"><?= date('d') ?></span> tháng <span contenteditable="true"><?= date('m') ?></span> năm <span contenteditable="true"><?= date('Y') ?></span>
             <br />
             <br />
             <br />

@@ -32,8 +32,7 @@ class ChiTietPhieuBan extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['so_pb'], 'required'],
-            [['so_pb', 'ma_ts', 'tk_doi_ung'], 'integer'],
+            [['ma_ts', 'tk_doi_ung'], 'integer'],
             [['so_tien'], 'number'],
             [['so_pb'], 'exist', 'skipOnError' => true, 'targetClass' => PhieuBanTs::className(), 'targetAttribute' => ['so_pb' => 'so_pb']],
             [['ma_ts'], 'exist', 'skipOnError' => true, 'targetClass' => TaiSan::className(), 'targetAttribute' => ['ma_ts' => 'ma_ts']],
@@ -47,10 +46,10 @@ class ChiTietPhieuBan extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'so_pb' => 'Số phiếu',
-            'ma_ts' => 'Mã tài sản',
-            'tk_doi_ung' => 'Tài khoản đối ứng',
-            'so_tien' => 'Số tiền',
+            'so_pb' => 'So Pb',
+            'ma_ts' => 'Ma Ts',
+            'tk_doi_ung' => 'Tk Doi Ung',
+            'so_tien' => 'So Tien',
         ];
     }
 
@@ -65,7 +64,7 @@ class ChiTietPhieuBan extends \yii\db\ActiveRecord
     /**
      * @return \yii\db\ActiveQuery
      */
-    public function getMaTs()
+    public function getTaiSan()
     {
         return $this->hasOne(TaiSan::className(), ['ma_ts' => 'ma_ts']);
     }
@@ -76,14 +75,5 @@ class ChiTietPhieuBan extends \yii\db\ActiveRecord
     public function getTkDoiUng()
     {
         return $this->hasOne(TaiKhoan::className(), ['ma_tk' => 'tk_doi_ung']);
-    }
-
-    /**
-     * @inheritdoc
-     * @return ChiTietPhieuBanQuery the active query used by this AR class.
-     */
-    public static function find()
-    {
-        return new ChiTietPhieuBanQuery(get_called_class());
     }
 }

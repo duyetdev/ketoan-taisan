@@ -17,6 +17,8 @@ use Yii;
  * @property integer $ma_tk
  * @property integer $ma_kho
  * @property integer $ma_nvc
+ * @property string $so_phieu
+ * @property string $ly_do
  *
  * @property ChiTietPhieuBan $chiTietPhieuBan
  * @property KhachHang $maKh
@@ -40,11 +42,13 @@ class PhieuBanTs extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['so_pb', 'ly_do', 'ma_nvc'], 'required'],
-            [['so_pb', 'ma_kh', 'ma_tk', 'ma_kho', 'ma_nvc'], 'integer'],
+            [['ma_kh', 'ma_tk', 'ma_kho', 'ma_nvc'], 'integer'],
+            [['ma_nvc', 'so_phieu', 'ly_do'], 'required'],
             [['ngay_ban', 'so_hoa_don', 'ngay_hoa_don', 'loai_hoa_don', 'thue_suat'], 'string', 'max' => 45],
-            [['ma_kh'], 'exist', 'skipOnError' => true, 'targetClass' => KhachHang::className(), 'targetAttribute' => ['ma_kh' => 'ma_kh']],
+            [['so_phieu'], 'string', 'max' => 50],
             [['ly_do'], 'string', 'max' => 255],
+            [['so_pb'], 'exist', 'skipOnError' => true, 'targetClass' => ChiTietPhieuBan::className(), 'targetAttribute' => ['so_pb' => 'so_pb']],
+            [['ma_kh'], 'exist', 'skipOnError' => true, 'targetClass' => KhachHang::className(), 'targetAttribute' => ['ma_kh' => 'ma_kh']],
             [['ma_tk'], 'exist', 'skipOnError' => true, 'targetClass' => TaiKhoan::className(), 'targetAttribute' => ['ma_tk' => 'ma_tk']],
             [['ma_kho'], 'exist', 'skipOnError' => true, 'targetClass' => Kho::className(), 'targetAttribute' => ['ma_kho' => 'ma_kho']],
             [['ma_nvc'], 'exist', 'skipOnError' => true, 'targetClass' => KhachHang::className(), 'targetAttribute' => ['ma_nvc' => 'ma_kh']],
@@ -57,17 +61,18 @@ class PhieuBanTs extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'so_pb' => 'Số phiếu',
-            'ngay_ban' => 'Ngày bán',
-            'so_hoa_don' => 'Số hóa đơn',
-            'ngay_hoa_don' => 'Ngày hóa đơn',
+            'so_pb' => 'So Pb',
+            'ngay_ban' => 'Ngay Ban',
+            'so_hoa_don' => 'So Hoa Don',
+            'ngay_hoa_don' => 'Ngay Hoa Don',
             'loai_hoa_don' => 'Loại hóa đơn',
-            'thue_suat' => 'Thuế suất',
-            'ma_kh' => 'Khách hàng',
+            'thue_suat' => 'Thue Suat',
+            'ma_kh' => 'Ma Kh',
             'ma_tk' => 'Tài khoản',
+            'ma_kho' => 'Ma Kho',
+            'ma_nvc' => 'Ma Nvc',
+            'so_phieu' => 'Số phiếu',
             'ly_do' => 'Lý do',
-            'ma_kho' => 'Kho',
-            'ma_nvc' => 'Người vận chuyển',
         ];
     }
 
@@ -111,12 +116,8 @@ class PhieuBanTs extends \yii\db\ActiveRecord
         return $this->hasOne(KhachHang::className(), ['ma_kh' => 'ma_nvc']);
     }
 
-    /**
-     * @inheritdoc
-     * @return PhieuBanTsQuery the active query used by this AR class.
-     */
-    public static function find()
+    public static function lastId()
     {
-        return new PhieuBanTsQuery(get_called_class());
+        return rand(1,999);
     }
 }
