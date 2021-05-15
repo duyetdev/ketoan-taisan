@@ -1,11 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "hash": "db5ded8958cdd8275bbd3713963b599a",
-    "content-hash": "4e088c99038318dccd92c04a20ca5e3f",
+    "content-hash": "f6dc488a9d4565a969856268a02086df",
     "packages": [
         {
             "name": "bower-asset/bootstrap",
@@ -361,20 +360,20 @@
                 "markdown",
                 "markdown-extra"
             ],
-            "time": "2015-03-06 05:28:07"
+            "time": "2015-03-06T05:28:07+00:00"
         },
         {
             "name": "clevertech/yii-booster",
-            "version": "v3.0.0",
+            "version": "v4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/clevertech/YiiBooster.git",
-                "reference": "d977eb8f195421c79ec0268bb53a0d7eac09028e"
+                "reference": "e0f9f68cfab70a4d7663f2857159dfeda4e15433"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/clevertech/YiiBooster/zipball/d977eb8f195421c79ec0268bb53a0d7eac09028e",
-                "reference": "d977eb8f195421c79ec0268bb53a0d7eac09028e",
+                "url": "https://api.github.com/repos/clevertech/YiiBooster/zipball/e0f9f68cfab70a4d7663f2857159dfeda4e15433",
+                "reference": "e0f9f68cfab70a4d7663f2857159dfeda4e15433",
                 "shasum": ""
             },
             "require": {
@@ -393,7 +392,7 @@
             "type": "library",
             "notification-url": "https://packagist.org/downloads/",
             "license": [
-                "MIT"
+                "BSD-2-Clause"
             ],
             "authors": [
                 {
@@ -409,6 +408,11 @@
                 },
                 {
                     "name": "Ruslan Fadeev"
+                },
+                {
+                    "name": "Amr Bedair",
+                    "email": "amr.bedair@gmail.com",
+                    "homepage": "http://amr.nefya.com"
                 }
             ],
             "description": "Widget toolkit for Yii framework",
@@ -417,7 +421,7 @@
                 "bootstrap",
                 "yii"
             ],
-            "time": "2014-04-29 16:18:21"
+            "time": "2014-06-06T19:38:18+00:00"
         },
         {
             "name": "ezyang/htmlpurifier",
@@ -461,7 +465,7 @@
             "keywords": [
                 "html"
             ],
-            "time": "2015-08-05 01:03:42"
+            "time": "2015-08-05T01:03:42+00:00"
         },
         {
             "name": "nkovacs/yii2-datetimepicker",
@@ -506,7 +510,7 @@
                 "extension",
                 "yii2"
             ],
-            "time": "2016-02-10 12:30:21"
+            "time": "2016-02-10T12:30:21+00:00"
         },
         {
             "name": "swiftmailer/swiftmailer",
@@ -559,7 +563,7 @@
                 "mail",
                 "mailer"
             ],
-            "time": "2016-05-01 08:45:47"
+            "time": "2016-05-01T08:45:47+00:00"
         },
         {
             "name": "yiisoft/yii2",
@@ -653,7 +657,7 @@
                 "framework",
                 "yii2"
             ],
-            "time": "2016-04-28 14:50:20"
+            "time": "2016-04-28T14:50:20+00:00"
         },
         {
             "name": "yiisoft/yii2-bootstrap",
@@ -703,7 +707,7 @@
                 "bootstrap",
                 "yii2"
             ],
-            "time": "2016-03-17 03:29:28"
+            "time": "2016-03-17T03:29:28+00:00"
         },
         {
             "name": "yiisoft/yii2-composer",
@@ -750,7 +754,7 @@
                 "extension installer",
                 "yii2"
             ],
-            "time": "2016-02-06 00:49:24"
+            "time": "2016-02-06T00:49:24+00:00"
         },
         {
             "name": "yiisoft/yii2-jui",
@@ -800,7 +804,7 @@
                 "jQuery UI",
                 "yii2"
             ],
-            "time": "2016-03-17 03:53:41"
+            "time": "2016-03-17T03:53:41+00:00"
         },
         {
             "name": "yiisoft/yii2-swiftmailer",
@@ -850,7 +854,7 @@
                 "swiftmailer",
                 "yii2"
             ],
-            "time": "2016-03-17 03:58:49"
+            "time": "2016-03-17T03:58:49+00:00"
         }
     ],
     "packages-dev": [
@@ -927,7 +931,8 @@
                 "faker",
                 "fixtures"
             ],
-            "time": "2016-04-29 12:21:54"
+            "abandoned": true,
+            "time": "2016-04-29T12:21:54+00:00"
         },
         {
             "name": "phpspec/php-diff",
@@ -965,7 +970,7 @@
                 }
             ],
             "description": "A comprehensive library for generating differences between two hashable objects (strings or arrays).",
-            "time": "2016-04-07 12:29:16"
+            "time": "2016-04-07T12:29:16+00:00"
         },
         {
             "name": "yiisoft/yii2-codeception",
@@ -1010,7 +1015,8 @@
                 "codeception",
                 "yii2"
             ],
-            "time": "2016-03-17 03:41:26"
+            "abandoned": "codeception/codeception",
+            "time": "2016-03-17T03:41:26+00:00"
         },
         {
             "name": "yiisoft/yii2-debug",
@@ -1057,7 +1063,7 @@
                 "debugger",
                 "yii2"
             ],
-            "time": "2016-03-17 03:50:19"
+            "time": "2016-03-17T03:50:19+00:00"
         },
         {
             "name": "yiisoft/yii2-faker",
@@ -1104,7 +1110,7 @@
                 "faker",
                 "yii2"
             ],
-            "time": "2015-03-01 06:22:44"
+            "time": "2015-03-01T06:22:44+00:00"
         },
         {
             "name": "yiisoft/yii2-gii",
@@ -1157,7 +1163,7 @@
                 "gii",
                 "yii2"
             ],
-            "time": "2016-03-18 14:09:46"
+            "time": "2016-03-18T14:09:46+00:00"
         }
     ],
     "aliases": [],
@@ -1168,5 +1174,6 @@
     "platform": {
         "php": ">=5.4.0"
     },
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }

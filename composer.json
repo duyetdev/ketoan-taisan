@@ -18,7 +18,7 @@
         "yiisoft/yii2": ">=2.0.5",
         "yiisoft/yii2-bootstrap": "*",
         "yiisoft/yii2-swiftmailer": "*",
-        "clevertech/yii-booster": "v3.0.0",
+        "clevertech/yii-booster": "4.0.1",
         "nkovacs/yii2-datetimepicker": "*",
         "yiisoft/yii2-jui": "^2.0"
     },
